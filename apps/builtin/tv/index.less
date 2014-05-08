@@ -1,0 +1,46 @@
+* {
+    box-sizing:border-box;
+}
+
+.tv_wrapper {
+
+    white-space: nowrap;
+    display:inline-block;
+
+    color: #fff;
+
+    & > .tv_header {
+
+        background-color: #000;
+
+
+        & > span {
+            display:inline-block;
+            width:100px;
+        }
+    }
+
+    & > .tv_row {
+        & > .tv_show {
+
+//            &:first-child {
+//                margin:3px 0 3px 0px;
+//            }
+
+            width:100px;
+
+            display: inline-block;
+            border:1px solid #999;
+            background-color: rgba(0,0,0,0.9);
+
+            padding:20px;
+            margin:3px 0 3px 3px;
+
+            overflow: hidden;
+
+            border-radius: 5px;
+
+        }
+    }
+}
+

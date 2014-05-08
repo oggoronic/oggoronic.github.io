@@ -1,0 +1,275 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,700,100,300,300italic,100italic,400italic,500,500italic,700italic,900,900italic);
+
+* {
+    //box-sizing:border-box;
+}
+
+body {
+    background-color: #000;
+    background-image: url('background.jpg');
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+
+    color:#a26868;
+
+    margin:0;
+    padding:0;
+    padding-bottom: 172px;
+    //overflow: hidden;
+
+    font-family: Roboto;
+    font-weight: 100;
+    color:#fff;
+
+}
+h1,h2,h3,h4.h5 {
+    font-weight: 100;
+    margin: 0;
+}
+
+
+#modal {
+
+
+
+
+    display:none;
+    position: fixed;
+    z-index: 10;
+    top: 40px;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    background-color: #000;
+    opacity:1;
+    border-radius: 8px;
+    box-shadow: #000 0 20px 50px;
+    padding: 10px;
+
+
+
+
+
+
+    &:after {
+        content : "";
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-image: url('lost.jpeg');
+        opacity : 0.2;
+        z-index: -1;
+        background-position: center;
+        background-size: cover;
+    }
+
+    h1 {
+        font-size: 64px;
+    }
+}
+
+.row {
+    font-size: 0;
+    margin:0;
+    padding:0;
+    & > .col {
+
+        @colsPerRow: 5;
+
+
+        display:inline-block;
+        width: (100%/@colsPerRow);
+        margin:0;
+        padding:0;
+
+        & > span {
+            display: inline-block;
+            width:100%;
+            font-size: 24px;
+            text-align: center;
+            color:#fff;
+        }
+
+        & > .icon {
+
+            &:before {
+                position: absolute;
+                left:0;
+                right:0;
+                top:0;
+                bottom:50%;
+
+                opacity:0.5;
+                .gradient(transparent, #fff, 20%, 100%);
+
+
+                content: '';
+                display: block;
+            }
+
+            position: relative;
+            border-radius: 8px;
+            margin:15px;
+            padding-top:10px;
+            padding-bottom: 16px;
+            text-align: center;
+            font-size: 64px;
+            color:#fff;
+            text-shadow: #000 0px 0 20px, #000 -1px 1px 2px;
+            box-shadow:0 0 10px #000;
+            opacity:0.8;
+
+
+
+            &.selected {
+                box-shadow:0 0 20px 2px #fff; //#5885ce;
+                border-radius: 10px;
+                border:4px solid #000;
+                padding-top:6px;
+                padding-bottom: 12px;
+            }
+
+            &.yellowOrange {
+                .gradient(#fff500,#f08214);
+                &.selected {
+                    //.gradient(lighten(#d8845d,10%), lighten(#ad2525,10%));
+                }
+            }
+            &.purple {
+                .gradient(#9744b9,#661384,20%,80%);
+            }
+            &.pinkPurple {
+                .gradient(#d43f73,#a53593);
+            }
+            &.purpleBlue {
+                .gradient(#9c5fb4,#4b38a5);
+            }
+            &.whiteGray {
+                .gradient(#aaa,#444);
+            }
+            &.grayBlack {
+                .gradient(#555,#222);
+            }
+            &.red {
+                .gradient(#e61313,#3c0e0e);
+            }
+            &.green {
+                .gradient(#23e613,#12cec7);
+            }
+
+
+
+
+
+            & > span {
+
+            }
+        }
+
+    }
+}
+
+header {
+    position: relative;
+    width:100%;
+    height:350px;
+    background-color: #fff;
+
+    box-shadow: #fff 0px 0px 100px;
+
+    //background-image: url('lost.jpeg');
+    //background-image: url('game-of-thrones.jpg');
+    //background-image: url('breaking-bad.jpg');
+    background-position: center;
+    background-size: cover;
+
+    border-bottom: 1px solid #ccc;
+
+    display: none;
+
+    &.selected {
+        display: block;
+        box-shadow: #41e2ff 0px 0px 40px;
+    }
+
+    //&:nth-of-type(1) {
+    //&:first-of-type {
+
+    .btn {
+        position: absolute;
+        color:#000;
+        bottom: 20px;
+        right:110px;
+        opacity:0.8;
+    }
+}
+
+#clock {
+    z-index: 2;
+    font-size: 24px;
+    color:#fff;
+    text-shadow: #000 1px 1px 2px;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+main {
+    padding:50px 100px;
+}
+
+.btn {
+
+    position: relative;
+    background-color:#fff;
+    border-radius: 8px;
+
+    padding:10px 20px;
+    box-shadow: #000 0 0 10px 3px;
+    font-size:2em;
+    padding-right: 100px;
+
+    & > .fa {
+        font-size: 48px;
+        right: 15px;
+        top:50%;
+        margin-top:-22px;
+        position: absolute;
+
+    }
+
+    & > i {
+        font-size: 14px;
+        text-decoration: none;
+        font-style: normal;
+        display: block;
+        padding:0;
+        margin:0;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.gradient(@colorFrom:#000, @colorTo:#fff, @start:0%, @stop: 100%) {
+	background: @colorFrom; /* Old browsers */
+	background: -moz-linear-gradient(top,  @colorFrom @start, @colorTo @stop); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(@start, @colorFrom), color-stop(@stop, @colorTo)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  @colorFrom @start, @colorTo @stop); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  @colorFrom @start, @colorTo @stop); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  @colorFrom @start, @colorTo @stop); /* IE10+ */
+	background: linear-gradient(to bottom,  @colorFrom @start, @colorTo @stop); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@{colorFrom}', endColorstr='@{colorTo}',GradientType=0 ); /* IE6-9 */
+}

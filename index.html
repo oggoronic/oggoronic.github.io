@@ -1,0 +1,335 @@
+<!doctype html>
+<html>
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible">
+        <title></title>
+
+<!--
+        <link rel="stylesheet" href="css/normalize.css">
+-->
+        <link rel="stylesheet" href="font-awesome/css/font-awesome.css" />
+        <link rel="stylesheet" href="index.css" />
+
+
+        <script type="application/javascript">
+
+
+            var iconsPerRow = 5;
+            var keys = {
+                enter: 13,
+                space: 32,
+                left: 37,
+                up: 38,
+                right: 39,
+                down: 40
+            };
+
+            var initEvents = (function() {
+
+                function keyup(e) {
+
+                    var allIcons = document.getElementsByClassName('icon');
+                    var selectedItem = document.querySelector('.icon.selected');
+                    //var selectedItem = document.querySelector('.selected');
+                    var allHeaders = document.getElementsByTagName('header');
+                    var currentTabIndex = null;
+                    var tabIndexToSelect = null;
+                    var itemToSelect = null;
+
+                    if (selectedItem !== null && selectedItem.tabIndex !== null)
+                        currentTabIndex = selectedItem.tabIndex;
+
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    switch(e.keyCode)
+                    {
+                        case keys.left:
+                            tabIndexToSelect = currentTabIndex-1;
+                            break;
+                        case keys.right:
+
+                            if (currentTabIndex === 0) {
+                                var currentHeaderIndex = 0;
+                                for(var i=1;i<allHeaders.length;i++) {
+                                    if (allHeaders[i].classList.contains('selected')){
+                                        currentHeaderIndex = i;
+                                        break;
+                                    }
+                                }
+                                if (currentHeaderIndex > 0) {
+                                    for(var i=1;i<allHeaders.length;i++) {
+                                        if (i === currentHeaderIndex){
+                                            allHeaders[i].classList.add('selected');
+                                        }
+                                        else {
+                                            allHeaders[i].classList.remove('selected');
+                                        }
+                                    }
+                                }
+                            }
+                            else {
+                                tabIndexToSelect = currentTabIndex+1;
+                            }
+
+
+                            break;
+                        case keys.up:
+                            tabIndexToSelect = currentTabIndex-iconsPerRow;
+
+                            //set to the slideshow
+                            if (tabIndexToSelect < 1) {
+                                for (var i=0;i<allIcons.length;i++) {
+                                    allIcons[i].classList.remove('selected');
+                                }
+
+                                document.getElementsByTagName('header')[0].classList.add('selected');
+                            }
+                            scrollUp();
+                            break;
+                        case keys.down:
+                            tabIndexToSelect = currentTabIndex+iconsPerRow;
+                            scrollDown();
+                            break;
+                        case keys.enter:
+                        case keys.space:
+
+                            if (document.getElementById('modal').style.display == 'block')
+                                document.getElementById('modal').style.display = 'none';
+                            else
+                                document.getElementById('modal').style.display = 'block';
+
+                            break;
+                    }
+
+
+                    if (tabIndexToSelect > 0) {
+                        for (var i=0;i<allIcons.length;i++) {
+                            if (allIcons[i].tabIndex === tabIndexToSelect) {
+                                itemToSelect = allIcons[i];
+                                break;
+                            }
+                        }
+                        if (selectedItem != null && itemToSelect != null){
+                            selectedItem.classList.remove('selected');
+                            itemToSelect.classList.add('selected');
+                        }
+                    }
+                }
+
+                var scroll = function (e){
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+
+                document.addEventListener('keyup', keyup);
+
+            });
+            var pixelsToScroll = 172;
+            function scrollDown() {
+
+                var currentMargin = document.getElementsByTagName('body')[0].style.marginTop;
+                var newMargin = parseInt(currentMargin) - pixelsToScroll;
+                document.getElementsByTagName('body')[0].style.marginTop = newMargin + 'px';
+            }
+            function scrollUp() {
+
+                var currentMargin = document.getElementsByTagName('body')[0].style.marginTop;
+                var newMargin = parseInt(currentMargin) + pixelsToScroll;
+                if (newMargin > 0)
+                    newMargin = 0;
+                document.getElementsByTagName('body')[0].style.marginTop = newMargin + 'px';
+            }
+
+            var initClock = (function() {
+                var now = new Date();
+                var hours = document.getElementById('clockHours');
+                var minutes = document.getElementById('clockMinutes');
+                hours.innerHTML = now.getHours();
+                minutes.innerHTML = (now.getMinutes() < 10 ? '0':'') + now.getMinutes();
+
+                var colon = document.getElementById('clockColon');
+                if(colon.style.visibility == 'hidden')
+                    colon.style.visibility = '';
+                else
+                    colon.style.visibility = 'hidden';
+
+                setTimeout(initClock, 1000);
+            });
+
+            window.onload = function() {
+                if (document.getElementsByTagName('body')[0].style.marginTop == '')
+                    document.getElementsByTagName('body')[0].style.marginTop = '0';
+
+                initEvents();
+                initClock();
+
+            };
+
+
+
+        </script>
+
+    </head>
+    <body>
+
+
+        <div id="modal">
+            <h1>Lost</h1>
+            <img src="sunburst.svg" />
+        </div>
+
+
+        <span id="clock">
+            <span id="clockHours"></span><span id="clockColon">:</span><span id="clockMinutes"></span>
+        </span>
+
+
+        <header tabindex="0" style="background-image: url('breaking-bad.jpg');" class="selected">
+            <span class="btn">
+                Episode 7, Season 3 <span class="fa fa-chevron-right"></span>
+                <i>Aired 2 days ago</i>
+            </span>
+        </header>
+
+        <header tabindex="0" style="background-image: url('Game-of-Thrones.jpg');">
+            <span class="btn">
+                Episode 7, Season 3 <span class="fa fa-chevron-right"></span>
+                <i>Aired 2 days ago</i>
+            </span>
+        </header>
+
+        <header tabindex="0" style="background-image: url('lost.jpeg');">
+            <span class="btn">
+                Episode 7, Season 3 <span class="fa fa-chevron-right"></span>
+                <i>Aired 2 days ago</i>
+            </span>
+        </header>
+
+
+
+        <main>
+            <div class="row">
+                <!-- fa-ticket fa-desktop fa-clock-o -->
+                <div class="col">
+                    <div class="icon yellowOrange selected" tabindex="1">
+                        <span class="fa fa-video-camera"></span>
+                    </div>
+                    <span>Videos</span>
+                </div>
+                <div class="col">
+                    <div class="icon purple" tabindex="2">
+                        <span class="fa fa-music"></span>
+                    </div>
+                    <span>Music</span>
+                </div>
+                <div class="col">
+                    <div class="icon pinkPurple" tabindex="3">
+                        <span class="fa fa-picture-o"></span>
+                    </div>
+                    <span>Photos</span>
+                </div>
+                <div class="col">
+                    <div class="icon purpleBlue" tabindex="4">
+                        <span class="fa fa-home"></span>
+                    </div>
+                    <span>Library</span>
+                </div>
+                <div class="col">
+                    <div class="icon whiteGray" tabindex="5">
+                        <span class="fa fa-gears"></span>
+                    </div>
+                    <span>Settings</span>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col">
+                    <div class="icon grayBlack" tabindex="6">
+                        <span class="fa fa-ticket"></span>
+                    </div>
+                    <span>Lorem ipsum</span>
+                </div>
+                <div class="col">
+                    <div class="icon green" tabindex="7">
+                        <span class="fa fa-desktop"></span>
+                    </div>
+                    <span>Live TV</span>
+                </div>
+                <div class="col">
+                    <div class="icon red" tabindex="8">
+                        <span class="fa fa-clock-o"></span>
+                    </div>
+                    <span>TV</span>
+                </div>
+
+                <div class="col">
+                    <div class="icon red" tabindex="9">
+                        <span class="fa fa-ban"></span>
+                    </div>
+                    <span>Lipsum</span>
+                </div>
+                <div class="col">
+                    <div class="icon red" tabindex="10">
+                        <span class="fa fa-ban"></span>
+                    </div>
+                    <span>Lipsum</span>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col">
+                    <div class="icon grayBlack" tabindex="11">
+                        <span class="fa fa-ban"></span>
+                    </div>
+                    <span>Lorem ipsum</span>
+                </div>
+                <div class="col">
+                    <div class="icon grayBlack" tabindex="12">
+                        <span class="fa fa-ban"></span>
+                    </div>
+                    <span>Live TV</span>
+                </div>
+                <div class="col">
+                    <div class="icon grayBlack" tabindex="13">
+                        <span class="fa fa-ban"></span>
+                    </div>
+                    <span>TV</span>
+                </div>
+
+                <div class="col">
+                    <div class="icon grayBlack" tabindex="14">
+                        <span class="fa fa-ban"></span>
+                    </div>
+                    <span>Lipsum</span>
+                </div>
+                <div class="col">
+                    <div class="icon grayBlack" tabindex="15">
+                        <span class="fa fa-ban"></span>
+                    </div>
+                    <span>Lipsum</span>
+                </div>
+            </div>
+<!--
+
+            <div class="icon" tabindex="6">asd</div>
+            <div class="icon" tabindex="7">asd</div>
+            <div class="icon" tabindex="8">as</div>
+            <div class="icon" tabindex="9">asd</div>
+            <div class="icon" tabindex="10">asd</div>
+            <div class="icon" tabindex="11">asd</div>
+            <div class="icon" tabindex="12">asd</div>
+            <div class="icon" tabindex="13">asd</div>
+-->
+        </main>
+    </body>
+
+</html>
